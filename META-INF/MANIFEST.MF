@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: GenerateurData
+Bundle-SymbolicName: GenerateurData
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: generateurdata.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;bundle-version="2.7.0",
+ Mesures;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: org.eclipse.emf.ecore.xmi,
+ org.eclipse.emf.ecore.xmi.impl
