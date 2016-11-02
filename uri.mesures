@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ASCII"?>
+<mesures:Measures xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:mesures="http://fr.ubo.md.ayoub/mesures" name="Temp&#xe9;rature &#xe0; Brest">
+  <theMap>
+    <thePoints latitude="48.39119189771081" longitude="-4.485018253326416">
+      <theDepths altitude="61.0" theValues="//@theData.0/@theValues.0 //@theData.0/@theValues.1"/>
+    </thePoints>
+  </theMap>
+  <theTimes laDate="3916-11-26T22:00:00.000+0100" theValues="//@theData.0/@theValues.0"/>
+  <theTimes laDate="3916-11-26T22:00:00.000+0100" theValues="//@theData.0/@theValues.1"/>
+  <theData name="Degr&#xe9; de temp&#xe9;rature" dataType="Numerique">
+    <theMetadata standardName="Temp&#xe9;rature" unit="&#xb0;C"/>
+    <theValues value="18.0" theLocation="//@theMap/@thePoints.0/@theDepths.0" theTime="//@theTimes.0"/>
+    <theValues value="8.0" theLocation="//@theMap/@thePoints.0/@theDepths.0" theTime="//@theTimes.1"/>
+  </theData>
+</mesures:Measures>

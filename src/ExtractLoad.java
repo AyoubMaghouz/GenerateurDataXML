@@ -1,9 +1,13 @@
 import java.io.File;
+import java.util.Map;
+
+import mesures.MesuresPackage;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -16,11 +20,12 @@ public class ExtractLoad {
 	public void sauverModele(String uri, EObject root) {
 		Resource resource = null;
 		try {
-			URI uriUri = URI.createFileURI(new File("uri").getAbsolutePath());
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+//			URI uriUri = URI.createFileURI(new File(uri).getAbsolutePath());
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("mesures", new XMIResourceFactoryImpl());
 			ResourceSetImpl resourceSetImpl = new ResourceSetImpl();
-			System.out.println(resourceSetImpl);
-			resource = resourceSetImpl.createResource(uriUri);
+
+			resource = resourceSetImpl.createResource(URI.createURI(uri));
+//			resource = resourceSetImpl.getResource(uriUri, true);
 			
 			resource.getContents().add(root);
 	      	resource.save(null); 
@@ -30,23 +35,20 @@ public class ExtractLoad {
 		} 
 	}
 
-	public Resource chargerModele(String uri, EPackage pack) {
+	public Resource chargerModele(String uri) { //public Resource chargerModele(String uri, EPackage pack)
 		Resource resource = null;
-		try {
-			URI uriUri = URI.createURI(uri);
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-			resource = (new ResourceSetImpl()).createResource(uriUri);
-			XMLResource.XMLMap xmlMap = new XMLMapImpl();
-			xmlMap.setNoNamespacePackage(pack);
-			java.util.Map options = new java.util.HashMap();
-			options.put(XMLResource.OPTION_XML_MAP, xmlMap);
-			resource.load(options); 
-		}
-		catch(Exception e) {
-			System.err.println("ERREUR chargement du modèle : "+e);
-			e.printStackTrace();
-		}
-		return resource;
+		MesuresPackage.eINSTANCE.eClass();
+		
+        Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
+        Map<String, Object> map = registry.getExtensionToFactoryMap();
+        map.put("mesures", new XMIResourceFactoryImpl());
+
+        ResourceSet resSet = new ResourceSetImpl();
+
+        // Get the resource
+        Resource res = resSet.getResource(URI.createURI(uri), true);
+		
+		return res;
 	}
 		
 		
