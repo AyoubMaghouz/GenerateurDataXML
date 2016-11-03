@@ -5,8 +5,8 @@
       <theDepths altitude="61.0" theValues="//@theData.0/@theValues.0 //@theData.0/@theValues.1"/>
     </thePoints>
   </theMap>
-  <theTimes laDate="3916-11-26T22:00:00.000+0100" theValues="//@theData.0/@theValues.0"/>
-  <theTimes laDate="3916-11-26T22:00:00.000+0100" theValues="//@theData.0/@theValues.1"/>
+  <theTimes laDate="3916-10-26T15:00:00.000+0200" theValues="//@theData.0/@theValues.0"/>
+  <theTimes laDate="3916-10-26T22:00:00.000+0200" theValues="//@theData.0/@theValues.1"/>
   <theData name="Degr&#xe9; de temp&#xe9;rature" dataType="Numerique">
     <theMetadata standardName="Temp&#xe9;rature" unit="&#xb0;C"/>
     <theValues value="18.0" theLocation="//@theMap/@thePoints.0/@theDepths.0" theTime="//@theTimes.0"/>
