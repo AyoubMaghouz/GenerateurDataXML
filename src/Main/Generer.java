@@ -1,5 +1,7 @@
 package Main;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Random;
 
 import mesures.Data;
 import mesures.Location;
@@ -31,7 +33,10 @@ public class Generer {
 		MesuresPackage mp = MesuresPackage.eINSTANCE;
 		MesuresFactory factory = MesuresFactory.eINSTANCE;
 		ExtractLoad el = new ExtractLoad();
-
+		Time t;
+		Date d;
+		Value v;
+		final int ANNEE_MIN = 2013, ANNEE_MAX = 2015, HEURE = 16, MINUTES = 00;
 		Float[][] T = {
 				{(float) 9.6 , (float) 10.9},
 				{(float) 8.7 , (float) 10.6},
@@ -47,6 +52,8 @@ public class Generer {
 				{(float) 10.7, (float) 14.1}
 				};
 				
+//***************************************************Fin Declarations *************************************************//		
+
 //***************************************************Generateur *************************************************//
 
 		Measures mesures = factory.createMeasures();
@@ -76,9 +83,44 @@ public class Generer {
 		data.setTheMetadata(temperature);
 
 		mesures.getTheData().add(data);
-				
-//***************************************************Test du sauvegarde *************************************************//		
+
+		for (int annee = ANNEE_MIN; annee <= ANNEE_MAX; annee++) {
+			Boolean bissextile = false;
+			if(annee % 400 == 0 || (annee % 4 == 0 && annee % 100 != 0))
+				bissextile = true;
+			for (int mois = 1; mois <= 12; mois++) {
+				int maxJours=30;
+				if(mois == 2)
+					maxJours = bissextile ? 29 : 28;
+				else if(mois == 4 || mois == 6 || mois == 9  || mois == 11)
+					maxJours=30;
+				else if(mois == 1 || mois == 3 || mois == 5  || mois == 7 || mois == 8 || mois == 10 || mois == 12)
+					maxJours=31;
+				for (int JOUR = 1; JOUR <= maxJours; JOUR++) {
+					t = factory.createTime();
+					t.setLaDate(new Date(annee, mois-1, JOUR, HEURE, MINUTES));
+					
+					mesures.getTheTimes().add(t);
+								
+					v = factory.createValue();
+					v.setValue(T[mois-1][0] + (float)Math.random() * (T[mois-1][1] - T[mois-1][0]));
+					
+					data.getTheValues().add(v);
+					
+					t.getTheValues().add(v);
+
+					el.sauverModele("uri.mesures", (EObject)mesures);
+
+				}			
+			}			
+		}
+		System.out.println("Generation de données terminée");
+
+	
+//***************************************************Fin Generateur *************************************************//
 		
+//***************************************************Test du sauvegarde *************************************************//		
+//		
 //		Measures mesures = factory.createMeasures();
 //		mesures.setName("Température à Brest");
 //		
@@ -95,10 +137,10 @@ public class Generer {
 //		theMap.getThePoints().add(mairie_de_Brest);
 //		
 //		Time t1 = factory.createTime();
-//		Date d = new Date(2016, 9, 26, 15, 00);
-//		t1.setLaDate(d);
+//		Date d1 = new Date(2016, 9, 26, 15, 00);
+//		t1.setLaDate(d1);
 //		
-//		System.out.println("d1 ---> "+d);		
+//		System.out.println("d1 ---> "+d1);		
 //		
 //		Time t2 = factory.createTime();
 //		Date d2 = new Date(2016, 9, 26, 22, 00);		
@@ -139,19 +181,17 @@ public class Generer {
 //		altitude_mairie_de_brest.getTheValues().add(v2);
 //		
 //		el.sauverModele("uri.mesures", (EObject)mesures);
+//		
+//***************************************************Fin Test du sauvegarde *************************************************//
 		
 //***************************************************Test du chargement *************************************************//		
 
-//		Resource res = el.chargerModele("uri.mesures");
-//		
-//		Measures mesures2 = (Measures) res.getContents().get(0);
-//		System.out.println(mesures2.getTheTimes().get(0));
-//		System.out.println(mesures2.getTheTimes().get(1));
-
-	}
+		Resource res = el.chargerModele("uri.mesures");
+		
+		Measures mesures2 = (Measures) res.getContents().get(0);
+		System.out.println("Chargement de données terminé");
+		
+//***************************************************Fin Test du chargement *************************************************//
 	
-	public static Date datePlus(Date d, Long t) {
-		d.setTime(d.getTime()+t);
-		return d;
 	}
 }
