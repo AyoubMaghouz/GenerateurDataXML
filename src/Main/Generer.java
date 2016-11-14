@@ -103,12 +103,17 @@ public class Generer {
 					mesures.getTheTimes().add(t);
 								
 					v = factory.createValue();
-					v.setValue(T[mois-1][0] + (float)Math.random() * (T[mois-1][1] - T[mois-1][0]));
+					double tempo = (T[mois-1][0] + (float)Math.random() * (T[mois-1][1] - T[mois-1][0]))*10;
+					int valeur_entier = (int)(tempo);
+					tempo = (double)valeur_entier/10;
+					v.setValue(tempo);
 					
 					data.getTheValues().add(v);
 					
 					t.getTheValues().add(v);
 
+					altitude_mairie_de_brest.getTheValues().add(v);
+					
 					el.sauverModele("uri.mesures", (EObject)mesures);
 
 				}			
