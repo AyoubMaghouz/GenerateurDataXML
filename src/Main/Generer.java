@@ -2,6 +2,7 @@ package Main;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Scanner;
 
 import mesures.Data;
 import mesures.Location;
@@ -36,7 +37,9 @@ public class Generer {
 		Time t;
 		Date d;
 		Value v;
-		final int ANNEE_MIN = 2013, ANNEE_MAX = 2015, HEURE = 16, MINUTES = 00;
+		long temps_dexec, start		;
+		int ns, mics, ms, s, min;
+		final int ANNEE_MIN = 1900, ANNEE_MAX = 1903, HEURE = 16, MINUTES = 00;
 		Float[][] T = {
 				{(float) 9.6 , (float) 10.9},
 				{(float) 8.7 , (float) 10.6},
@@ -54,8 +57,10 @@ public class Generer {
 				
 //***************************************************Fin Declarations *************************************************//		
 
-//***************************************************Generateur *************************************************//
+////***************************************************Generateur *************************************************//
 
+		start = System.nanoTime();
+		
 		Measures mesures = factory.createMeasures();
 		mesures.setName("Température à Brest");
 		
@@ -119,7 +124,14 @@ public class Generer {
 				}			
 			}			
 		}
-		System.out.println("Generation de données terminée");
+		temps_dexec = System.nanoTime()-start;
+		ns = (int)(temps_dexec % 1000);
+		mics = (int)(temps_dexec / 1000)%1000;
+		ms = (int)(temps_dexec / 1000000) % 1000;
+		s = (int)(temps_dexec / 1000000000) % 1000;
+		min = (int)(temps_dexec / 1000000000/60) % 60;
+		System.out.println("Generation de données terminée en: "+min+"min "+s+"s "+ms+"ms "+mics+"mics "+ns+"ns");
+		System.out.println(temps_dexec+" ns");
 
 	
 //***************************************************Fin Generateur *************************************************//
@@ -190,12 +202,20 @@ public class Generer {
 //***************************************************Fin Test du sauvegarde *************************************************//
 		
 //***************************************************Test du chargement *************************************************//		
-
+		
+		start = System.nanoTime();
 		Resource res = el.chargerModele("uri.mesures");
 		
 		Measures mesures2 = (Measures) res.getContents().get(0);
-		System.out.println("Chargement de données terminé");
-		
+		temps_dexec = System.nanoTime()-start;
+		ns = (int)(temps_dexec % 1000);
+		mics = (int)(temps_dexec / 1000)%1000;
+		ms = (int)(temps_dexec / 1000000) % 1000;
+		s = (int)(temps_dexec / 1000000000) % 1000;
+		min = (int)(temps_dexec / 1000000000/60) % 60;
+		System.out.println("Chargement de données terminé en: "+min+"min "+s+"s "+ms+"ms "+mics+"mics "+ns+"ns");
+		System.out.println(temps_dexec+" ns");
+
 //***************************************************Fin Test du chargement *************************************************//
 	
 	}
