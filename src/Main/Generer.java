@@ -40,6 +40,7 @@ public class Generer {
 		long temps_dexec, start		;
 		int ns, mics, ms, s, min;
 		final int ANNEE_MIN = 1900, ANNEE_MAX = 1903, HEURE = 16, MINUTES = 00;
+		String[] villes = {"Brest", "Tanger"};
 		Float[][] T = {
 				{(float) 9.6 , (float) 10.9},
 				{(float) 8.7 , (float) 10.6},
@@ -70,6 +71,7 @@ public class Generer {
 		PointOnEarth mairie_de_Brest = factory.createPointOnEarth();
 		mairie_de_Brest.setLatitude(48.39119189771081);
 		mairie_de_Brest.setLongitude(-4.485018253326416);
+		mairie_de_Brest.setName("Brest");
 		
 		Location altitude_mairie_de_brest = factory.createLocation();
 		altitude_mairie_de_brest.setAltitude(61.0);
