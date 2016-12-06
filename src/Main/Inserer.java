@@ -7,17 +7,18 @@ import mesures.Location;
 import mesures.Map;
 import mesures.Measures;
 import mesures.MesuresFactory;
-import mesures.MesuresPackage;
 import mesures.MetaData;
 import mesures.PointOnEarth;
 import mesures.Time;
 import mesures.Value;
 
+import org.eclipse.emf.ecore.resource.Resource;
+
 import Controller.ExtractLoad;
 
 import timer.Timer;
 
-public class Generer {
+public class Inserer {
 
 	/**
 	 * @param args
@@ -25,53 +26,48 @@ public class Generer {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-// ***************************************************Declarations*************************************************//
-
 		MesuresFactory factory = MesuresFactory.eINSTANCE;
-		ExtractLoad el = new ExtractLoad();
 		Time t;
 		Value v;
 		final int ANNEE_MIN = 1900, ANNEE_MAX = 1900, HEURE = 16, MINUTES = 00;
 		// String[] villes = {"Brest", "Tanger"};
 		Float[][] T = { 
-				{ (float) 9.6, (float) 10.9 },
-				{ (float) 8.7, (float) 10.6 }, 
-				{ (float) 9.9, (float) 12.0 },
-				{ (float) 12.4, (float) 16.4 }, 
-				{ (float) 14.5, (float) 16.7 },
-				{ (float) 17.2, (float) 20.6 }, 
-				{ (float) 20.7, (float) 22.6 },
-				{ (float) 19.8, (float) 21.7 }, 
-				{ (float) 18.4, (float) 22.8 },
-				{ (float) 16.2, (float) 18.1 }, 
-				{ (float) 11.7, (float) 14.6 },
-				{ (float) 10.7, (float) 14.1 } };
-
-// ***************************************************Fin Declarations*************************************************//
-
-//***************************************************Generateur*************************************************//
-
-		Timer timer = new Timer();
+				{ (float) 12.5, (float) 16.2 },
+				{ (float) 13.1, (float) 16.8 }, 
+				{ (float) 14.0, (float) 17.9 },
+				{ (float) 15.2, (float) 19.2 }, 
+				{ (float) 17.7, (float) 21.9 },
+				{ (float) 20.6, (float) 24.9 }, 
+				{ (float) 23.5, (float) 28.3 },
+				{ (float) 23.9, (float) 28.6 }, 
+				{ (float) 22.8, (float) 27.3 },
+				{ (float) 19.7, (float) 23.7 }, 
+				{ (float) 15.9, (float) 19.6 },
+				{ (float) 13.3, (float) 17.0 }};
+		
+		ExtractLoad el = new ExtractLoad();
+		
+		Timer timer = new Timer(); 
 		timer.start();
-		Measures mesures = factory.createMeasures();
-		mesures.setName("Température à Brest");
+		
+		Resource res = el.chargerModele("uri.mesures");
+		
+		Measures mesures = (Measures) res.getContents().get(0);
+		Map theMap = mesures.getTheMap();
+		
+		PointOnEarth tanger = factory.createPointOnEarth();
+		tanger.setLatitude(35.736097);
+		tanger.setLongitude(-5.894165);
+		tanger.setName("FST-Tanger");
 
-		Map theMap = factory.createMap();
-		mesures.setTheMap(theMap);
+		Location altitude_tanger = factory.createLocation();
+		altitude_tanger.setAltitude(29);
 
-		PointOnEarth mairie_de_Brest = factory.createPointOnEarth();
-		mairie_de_Brest.setLatitude(48.39119189771081);
-		mairie_de_Brest.setLongitude(-4.485018253326416);
-		mairie_de_Brest.setName("Brest");
-
-		Location altitude_mairie_de_brest = factory.createLocation();
-		altitude_mairie_de_brest.setAltitude(61.0);
-
-		mairie_de_Brest.getTheDepths().add(altitude_mairie_de_brest);
-		theMap.getThePoints().add(mairie_de_Brest);
+		tanger.getTheDepths().add(altitude_tanger);
+		theMap.getThePoints().add(tanger);
 
 		Data data = factory.createData();
-		data.setName("Températures maximales moyennes");
+		data.setName("Températures moyennes");
 		data.setDataType("Numerique");
 
 		MetaData temperature = factory.createMetaData();
@@ -112,18 +108,19 @@ public class Generer {
 
 					t.getTheValues().add(v);
 
-					altitude_mairie_de_brest.getTheValues().add(v);
+					altitude_tanger.getTheValues().add(v);
 
 					el.sauverModele("uri.mesures", mesures);
 
 				}
 			}
 		}
+		
 		timer.stop();
-		System.out.println("Generation et sauvegarde de données terminée en: "+ timer.getExecutionTime());
+		System.out.println("Chargement et insértion de données terminée en: "+ timer.getExecutionTime());
 		System.out.println(timer.getTemps_dexec_ns() + " ns");
 		
 		el.sauverModele("uri.mesures", mesures);
-
 	}
+
 }
