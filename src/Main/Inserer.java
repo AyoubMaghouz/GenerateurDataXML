@@ -64,6 +64,7 @@ public class Inserer {
 		altitude_tanger.setAltitude(29);
 
 		tanger.getTheDepths().add(altitude_tanger);
+		altitude_tanger.setThePoint(tanger);
 		theMap.getThePoints().add(tanger);
 
 		Data data = factory.createData();
@@ -107,8 +108,10 @@ public class Inserer {
 					data.getTheValues().add(v);
 
 					t.getTheValues().add(v);
+					v.setTheTime(t);
 
 					altitude_tanger.getTheValues().add(v);
+					v.setTheLocation(altitude_tanger);
 
 					el.sauverModele("uri.mesures", mesures);
 

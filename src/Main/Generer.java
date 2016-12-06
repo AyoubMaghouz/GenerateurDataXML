@@ -68,6 +68,7 @@ public class Generer {
 		altitude_mairie_de_brest.setAltitude(61.0);
 
 		mairie_de_Brest.getTheDepths().add(altitude_mairie_de_brest);
+		altitude_mairie_de_brest.setThePoint(mairie_de_Brest);
 		theMap.getThePoints().add(mairie_de_Brest);
 
 		Data data = factory.createData();
@@ -111,8 +112,10 @@ public class Generer {
 					data.getTheValues().add(v);
 
 					t.getTheValues().add(v);
+					v.setTheTime(t);
 
 					altitude_mairie_de_brest.getTheValues().add(v);
+					v.setTheLocation(altitude_mairie_de_brest);
 
 					el.sauverModele("uri.mesures", mesures);
 

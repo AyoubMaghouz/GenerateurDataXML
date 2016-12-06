@@ -46,7 +46,7 @@ public class Chercher {
 		Location loc = factory.createLocation();
 		loc.setAltitude(61.0);
 		p.getTheDepths().add(loc);
-		
+		loc.setThePoint(p);
 		
 		Date d = new Date(1900, 0, 1, 16, 0);
 		
@@ -93,7 +93,14 @@ public class Chercher {
 
 	public static Map<Location, Double> getTemperatureMoyenne(Measures m, PointOnEarth p) {
 		Map<Location, Double> map = new HashMap<Location, Double>();
-		for (Location location : (EList<Location>)p.getTheDepths()) {
+		PointOnEarth myPointOnEarth = null;
+		for (PointOnEarth pp : (EList<PointOnEarth>)m.getTheMap().getThePoints()) {
+			if(pp.getLatitude() == p.getLatitude() && pp.getLongitude() == p.getLongitude() && pp.getName().equals(p.getName())){
+				myPointOnEarth = pp;
+				continue;
+			}
+		}
+		for (Location location : (EList<Location>)myPointOnEarth.getTheDepths()) {
 			double moy = 0;
 			for (Value value : (EList<Value>) location.getTheValues()) {
 				moy += value.getValue();
