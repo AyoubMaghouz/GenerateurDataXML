@@ -122,11 +122,9 @@ public class Generer {
 				}
 			}
 		}
+		el.sauverModele("uri.mesures", mesures);
 		timer.stop();
 		System.out.println("Generation et sauvegarde de données terminée en: "+ timer.getExecutionTime());
 		System.out.println(timer.getTemps_dexec_ns() + " ns");
-		
-		el.sauverModele("uri.mesures", mesures);
-
 	}
 }

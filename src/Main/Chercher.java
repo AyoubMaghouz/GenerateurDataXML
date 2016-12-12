@@ -52,9 +52,9 @@ public class Chercher {
 		
 		System.out.println(getTemperature(mesures, p, d));
 		
-		Map<Location, Double> m = getTemperatureMoyenne(mesures, p); 
-		for (Location location : m.keySet()) {
-			System.out.println(location.getThePoint().getName() + "//---/---//"+m.get(location));
+		Map<String, Double> m = getTemperatureMoyenne(mesures, p); 
+		for (String location : m.keySet()) {
+			System.out.println(location+m.get(location));
 		}
 		System.out.println();
 		
@@ -91,8 +91,8 @@ public class Chercher {
 		return res;
 	}
 
-	public static Map<Location, Double> getTemperatureMoyenne(Measures m, PointOnEarth p) {
-		Map<Location, Double> map = new HashMap<Location, Double>();
+	public static Map<String, Double> getTemperatureMoyenne(Measures m, PointOnEarth p) {
+		Map<String, Double> map = new HashMap<String, Double>();
 		PointOnEarth myPointOnEarth = null;
 		for (PointOnEarth pp : (EList<PointOnEarth>)m.getTheMap().getThePoints()) {
 			if(pp.getLatitude() == p.getLatitude() && pp.getLongitude() == p.getLongitude() && pp.getName().equals(p.getName())){
@@ -105,7 +105,7 @@ public class Chercher {
 			for (Value value : (EList<Value>) location.getTheValues()) {
 				moy += value.getValue();
 			}
-			map.put(location, moy/location.getTheValues().size());
+			map.put(""+myPointOnEarth.getName()+" - "+location.getAltitude()+" m -> ", moy/location.getTheValues().size());
 		}
 		return map;
 	}
