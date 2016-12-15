@@ -15,16 +15,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import timer.Timer;
-
 import Controller.ExtractLoad;
 
 public class Chercher {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		MesuresFactory factory = MesuresFactory.eINSTANCE;
 		Timer timer = new Timer();
@@ -68,15 +63,8 @@ public class Chercher {
 		double res = -1;
 		for (Time t : (EList<Time>)(m.getTheTimes())) {
 			if(t.getLaDate().getTime() == d.getTime()){
-//				System.out.println(t.getLaDate().getTime()+"//---//---//"+d.getTime());
 				for (Value v : (EList<Value>)t.getTheValues()) {
-//					System.out.println(v.getValue());
 					for (Location l : (EList<Location>)p.getTheDepths()) {
-//						System.out.println(l.getAltitude()+"//----//"+v.getTheLocation().getAltitude());
-//						System.out.println(l.getThePoint().getLatitude()+"//----//"+v.getTheLocation().getThePoint().getLatitude());
-//						System.out.println(l.getThePoint().getLongitude()+"//----//"+v.getTheLocation().getThePoint().getLongitude());
-//						System.out.println(l.getThePoint().getName()+"//----//"+v.getTheLocation().getThePoint().getName());
-
 						if(l.getAltitude() == v.getTheLocation().getAltitude() 
 								&& l.getThePoint().getLatitude() == v.getTheLocation().getThePoint().getLatitude()
 								&& l.getThePoint().getLongitude() == v.getTheLocation().getThePoint().getLongitude()

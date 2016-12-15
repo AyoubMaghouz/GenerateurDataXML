@@ -41,7 +41,6 @@ public class Timer {
         int mics = (int) (temps_dexec / 1000) % 1000;
         int ms = (int) (temps_dexec / 1000000) % 1000;
         int s = (int) (temps_dexec / 1000000000) % 1000;
-        int min = (int) (temps_dexec / 1000000000 / 60) % 60;
-        return "" + min + "min " + s + "s " + ms + "ms " + mics + "mics " + ns + "ns";
+        return "" + s + "s " + ms + "ms " + mics + "mics " + ns + "ns";
     }
 }

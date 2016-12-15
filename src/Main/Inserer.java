@@ -14,23 +14,17 @@ import mesures.Value;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
-import Controller.ExtractLoad;
-
 import timer.Timer;
+import Controller.ExtractLoad;
 
 public class Inserer {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		MesuresFactory factory = MesuresFactory.eINSTANCE;
 		Time t;
 		Value v;
 		final int ANNEE_MIN = 1900, ANNEE_MAX = 1900, HEURE = 16, MINUTES = 00;
-		// String[] villes = {"Brest", "Tanger"};
 		Float[][] T = { 
 				{ (float) 12.5, (float) 16.2 },
 				{ (float) 13.1, (float) 16.8 }, 
@@ -112,18 +106,13 @@ public class Inserer {
 
 					altitude_tanger.getTheValues().add(v);
 					v.setTheLocation(altitude_tanger);
-
-					el.sauverModele("uri.mesures", mesures);
-
 				}
 			}
 		}
-		
+		el.sauverModele("uri.mesures", mesures);
 		timer.stop();
 		System.out.println("Chargement et insértion de données terminée en: "+ timer.getExecutionTime());
 		System.out.println(timer.getTemps_dexec_ns() + " ns");
-		
-		el.sauverModele("uri.mesures", mesures);
 	}
 
 }

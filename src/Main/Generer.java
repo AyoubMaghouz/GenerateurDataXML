@@ -7,32 +7,23 @@ import mesures.Location;
 import mesures.Map;
 import mesures.Measures;
 import mesures.MesuresFactory;
-import mesures.MesuresPackage;
 import mesures.MetaData;
 import mesures.PointOnEarth;
 import mesures.Time;
 import mesures.Value;
-
-import Controller.ExtractLoad;
-
 import timer.Timer;
+import Controller.ExtractLoad;
 
 public class Generer {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 // ***************************************************Declarations*************************************************//
 
 		MesuresFactory factory = MesuresFactory.eINSTANCE;
 		ExtractLoad el = new ExtractLoad();
 		Time t;
 		Value v;
-		final int ANNEE_MIN = 1900, ANNEE_MAX = 1900, HEURE = 16, MINUTES = 00;
-		// String[] villes = {"Brest", "Tanger"};
+		final int ANNEE_MIN = 1900, ANNEE_MAX = 2000, HEURE = 16, MINUTES = 00;
 		Float[][] T = { 
 				{ (float) 9.6, (float) 10.9 },
 				{ (float) 8.7, (float) 10.6 }, 
@@ -41,7 +32,7 @@ public class Generer {
 				{ (float) 14.5, (float) 16.7 },
 				{ (float) 17.2, (float) 20.6 }, 
 				{ (float) 20.7, (float) 22.6 },
-				{ (float) 19.8, (float) 21.7 }, 
+				{ (float) 19.8, (float) 21.7 },
 				{ (float) 18.4, (float) 22.8 },
 				{ (float) 16.2, (float) 18.1 }, 
 				{ (float) 11.7, (float) 14.6 },
@@ -116,9 +107,6 @@ public class Generer {
 
 					altitude_mairie_de_brest.getTheValues().add(v);
 					v.setTheLocation(altitude_mairie_de_brest);
-
-					el.sauverModele("uri.mesures", mesures);
-
 				}
 			}
 		}
