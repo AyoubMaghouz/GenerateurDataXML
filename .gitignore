@@ -3,3 +3,6 @@ uri.mesures*
 *~
 build.properties
 .settings
+META-INF
+.classpath
+.project
