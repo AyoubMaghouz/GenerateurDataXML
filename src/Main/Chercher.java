@@ -51,10 +51,7 @@ public class Chercher {
 		for (String location : m.keySet()) {
 			System.out.println(location+m.get(location));
 		}
-		System.out.println();
-		
 		timer.stop();
-		
 		System.out.println("Chargement et requete simple terminée en: "+ timer.getExecutionTime());
 		System.out.println(timer.getTemps_dexec_ns() + " ns");
 	}
