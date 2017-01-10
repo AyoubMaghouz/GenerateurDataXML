@@ -1,6 +1,7 @@
 package Main;
 
 import java.util.Date;
+import java.util.Iterator;
 
 import mesures.Data;
 import mesures.Location;
@@ -89,8 +90,20 @@ public class Inserer {
 				for (int JOUR = 1; JOUR <= maxJours; JOUR++) {
 					t = factory.createTime();
 					t.setLaDate(new Date(annee, mois - 1, JOUR, HEURE, MINUTES));
-
-					mesures.getTheTimes().add(t);
+					
+					Boolean time_already_exists = false;
+					Time t_tempo;
+					for (Iterator<Time> iterator = mesures.getTheTimes().iterator(); iterator.hasNext();) {
+						t_tempo = iterator.next();
+						if(t.getLaDate().equals(t_tempo.getLaDate())){
+							t = t_tempo;
+							time_already_exists = true;
+							System.out.println("t = t_tempo");
+							continue;
+						}
+					}
+					if(!time_already_exists)
+						mesures.getTheTimes().add(t);
 
 					v = factory.createValue();
 					double tempo = (T[mois - 1][0] + (float) Math.random()
