@@ -16,6 +16,7 @@ import Controller.ExtractLoad;
 
 public class Generer {
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public static void main(String[] args) {
 // ***************************************************Declarations*************************************************//
 
@@ -23,8 +24,8 @@ public class Generer {
 		ExtractLoad el = new ExtractLoad();
 		Time t;
 		Value v;
-		final int ANNEE_MIN = 1900, ANNEE_MAX = 2000, HEURE = 16, MINUTES = 00;
-		Float[][] T = { 
+		final int ANNEE_MIN = 1900, ANNEE_MAX = 1950;
+		Float[][] T = { // Tableaux utililsé pour stocker les valeurs min et max de la température de la ville qu'on traite chaque mois, et cela pour que les valeurs soit un peu près réelles.
 				{ (float) 9.6, (float) 10.9 },
 				{ (float) 8.7, (float) 10.6 }, 
 				{ (float) 9.9, (float) 12.0 },
@@ -42,8 +43,10 @@ public class Generer {
 
 //***************************************************Generateur*************************************************//
 
-		Timer timer = new Timer();
+		Timer timer = new Timer();// pour le calcul approx du temps d'exec
 		timer.start();
+		
+        // Construction de notre modéle ( en memoire )
 		Measures mesures = factory.createMeasures();
 		mesures.setName("Température à Brest");
 
@@ -74,6 +77,8 @@ public class Generer {
 
 		mesures.getTheData().add(data);
 
+		// Pour chaque heure de chaque jour de chaque mois de toutes les années entre ANNEE_MIN et ANNEE_MAX on insére une valeur de température
+        // La valeur dépend du jours et du mois (il n y a pas de logique dans la variation de la température pendant une journée: c'est juste aléatoire)
 		for (int annee = ANNEE_MIN; annee <= ANNEE_MAX; annee++) {
 			Boolean bissextile = false;
 			if (annee % 400 == 0 || (annee % 4 == 0 && annee % 100 != 0))
@@ -88,29 +93,34 @@ public class Generer {
 						|| mois == 8 || mois == 10 || mois == 12)
 					maxJours = 31;
 				for (int JOUR = 1; JOUR <= maxJours; JOUR++) {
-					t = factory.createTime();
-					t.setLaDate(new Date(annee, mois - 1, JOUR, HEURE, MINUTES));
+					for (int HEURE = 0; HEURE < 24; HEURE++) {
+						for (int MINUTES = 0; MINUTES < 60; MINUTES++){
+							for (int SECONDES = 0; SECONDES < 60; SECONDES++) {
+								t = factory.createTime();
+								t.setLaDate(new Date(annee, mois - 1, JOUR, HEURE, MINUTES,SECONDES));
 
-					mesures.getTheTimes().add(t);
+								mesures.getTheTimes().add(t);
 
-					v = factory.createValue();
-					double tempo = (T[mois - 1][0] + (float) Math.random()
-							* (T[mois - 1][1] - T[mois - 1][0])) * 10;
-					int valeur_entier = (int) (tempo);
-					tempo = (double) valeur_entier / 10;
-					v.setValue(tempo);
+								v = factory.createValue();
+								double tempo = (T[mois - 1][0] + (float) Math.random() * (T[mois - 1][1] - T[mois - 1][0])) * 10;
+								int valeur_entier = (int) (tempo);
+								tempo = (double) valeur_entier / 10;
+								v.setValue(tempo);
 
-					data.getTheValues().add(v);
+								data.getTheValues().add(v);
 
-					t.getTheValues().add(v);
-					v.setTheTime(t);
+								t.getTheValues().add(v);
+								v.setTheTime(t);
 
-					altitude_mairie_de_brest.getTheValues().add(v);
-					v.setTheLocation(altitude_mairie_de_brest);
+								altitude_mairie_de_brest.getTheValues().add(v);
+								v.setTheLocation(altitude_mairie_de_brest);
+							}
+						}
+					}
 				}
 			}
 		}
-		el.sauverModele("uri.mesures", mesures);
+		el.sauverModele("uri.mesures", mesures); // Fonction de sauvegarde.
 		timer.stop();
 		System.out.println("Generation et sauvegarde de données terminée en: "+ timer.getExecutionTime());
 		System.out.println(timer.getTemps_dexec_ns() + " ns");

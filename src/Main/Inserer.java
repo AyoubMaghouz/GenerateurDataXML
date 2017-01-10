@@ -20,6 +20,7 @@ import Controller.ExtractLoad;
 
 public class Inserer {
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public static void main(String[] args) {
 
 		MesuresFactory factory = MesuresFactory.eINSTANCE;
@@ -74,6 +75,7 @@ public class Inserer {
 
 		mesures.getTheData().add(data);
 
+		t = factory.createTime();
 		for (int annee = ANNEE_MIN; annee <= ANNEE_MAX; annee++) {
 			Boolean bissextile = false;
 			if (annee % 400 == 0 || (annee % 4 == 0 && annee % 100 != 0))
@@ -88,7 +90,6 @@ public class Inserer {
 						|| mois == 8 || mois == 10 || mois == 12)
 					maxJours = 31;
 				for (int JOUR = 1; JOUR <= maxJours; JOUR++) {
-					t = factory.createTime();
 					t.setLaDate(new Date(annee, mois - 1, JOUR, HEURE, MINUTES));
 					
 					Boolean time_already_exists = false;
@@ -98,7 +99,6 @@ public class Inserer {
 						if(t.getLaDate().equals(t_tempo.getLaDate())){
 							t = t_tempo;
 							time_already_exists = true;
-							System.out.println("t = t_tempo");
 							continue;
 						}
 					}
