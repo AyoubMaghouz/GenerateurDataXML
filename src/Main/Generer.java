@@ -98,7 +98,6 @@ public class Generer {
 							for (int SECONDES = 0; SECONDES < 60; SECONDES++) {
 								t = factory.createTime();
 								t.setLaDate(new Date(annee, mois - 1, JOUR, HEURE, MINUTES,SECONDES));
-
 								mesures.getTheTimes().add(t);
 
 								v = factory.createValue();
@@ -111,7 +110,7 @@ public class Generer {
 
 								t.getTheValues().add(v);
 								v.setTheTime(t);
-
+								
 								altitude_mairie_de_brest.getTheValues().add(v);
 								v.setTheLocation(altitude_mairie_de_brest);
 							}
